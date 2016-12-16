@@ -3,15 +3,12 @@ package monopolymap;
 import static org.jenetics.engine.EvolutionResult.toBestPhenotype;
 import static org.jenetics.engine.limit.bySteadyFitness;
 
-import org.jenetics.Genotype;
-import org.jenetics.IntegerChromosome;
 import org.jenetics.IntegerGene;
 import org.jenetics.Phenotype;
-import org.jenetics.engine.Codec;
 import org.jenetics.engine.Engine;
 import org.jenetics.engine.EvolutionStatistics;
 
-public class EntryPoint {
+public class MonopolyMapGenerator {
 
     /**
      * @param args
@@ -30,13 +27,19 @@ public class EntryPoint {
         Phenotype<IntegerGene, Integer> result = engine
                 .stream()
                 .limit(bySteadyFitness(10))
-                .limit(30)
-                .peek(r -> System.out.println(r.getTotalGenerations() + " :  " + r.getBestPhenotype()))
+                .limit(1)
                 .peek(statistics)
                 .collect(toBestPhenotype());
 
         System.out.println(statistics);
         System.out.println(result);
+        
+        Cartographer cartographer = Cartographer.builder()
+                .directions(RoadMap.DIRECTIONS)
+                .with(new ConsoleDrawStrategy(result))
+                .build();
+        
+        cartographer.draw();
     }
 
 }
