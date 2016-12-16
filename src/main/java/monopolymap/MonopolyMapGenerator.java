@@ -19,10 +19,10 @@ public class MonopolyMapGenerator {
      */
     public static void main(String[] args) {
 
-        List<IDirection> directions = Direction.DIRECTIONS_4;
+        List<IDirection> directions = Direction.DIRECTIONS_8;
         
         Engine<IntegerGene, Integer> engine = Engine
-                .builder(RoadMap.fitness(), RoadMap.codec(directions))
+                .builder(RoadMap.fitness(), new RoadMapCodec(directions))
                 .build();
 
         EvolutionStatistics<Integer, ?> statistics = EvolutionStatistics.ofNumber();

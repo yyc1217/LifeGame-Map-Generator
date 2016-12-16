@@ -66,19 +66,4 @@ public class RoadMap {
     public static final Function<RoadMap, Integer> fitness() {
         return FITNESS;
     }
-
-    public static final Codec<RoadMap, IntegerGene> codec(List<IDirection> directions) {
-        
-        Genotype<IntegerGene> genotype = Genotype.of(
-                IntegerChromosome.of(0, directions.size() - 1, COLUMNS), 
-                ROWS
-        );
-    
-        Codec<RoadMap, IntegerGene> codec = Codec.of(
-                genotype,
-                geno -> new RoadMap(geno, directions)
-        );
-
-        return codec;
-    }
 }
