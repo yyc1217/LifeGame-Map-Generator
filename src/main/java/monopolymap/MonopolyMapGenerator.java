@@ -22,7 +22,7 @@ public class MonopolyMapGenerator {
         List<IDirection> directions = Direction.DIRECTIONS_8;
         
         Engine<IntegerGene, Integer> engine = Engine
-                .builder(RoadMap.fitness(), new RoadMapCodec(directions))
+                .builder(RoadMap.FITNESS, new RoadMapCodec(directions))
                 .build();
 
         EvolutionStatistics<Integer, ?> statistics = EvolutionStatistics.ofNumber();

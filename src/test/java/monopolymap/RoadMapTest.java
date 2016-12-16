@@ -13,19 +13,24 @@ public class RoadMapTest {
 
         Road road = new Road(paths);
         Cursor cursor = new Cursor(0, 0);
-
-        int depth = RoadMap.getDepth(road, Direction.DIRECTIONS_4, cursor, 1);
+        
+        RoadMap roadMap = new RoadMap(road, Direction.DIRECTIONS_4, 2, 2);
+        int depth = roadMap.findMaxDepth(cursor);
+        
         assertEquals(4, depth);
     }
     
     @Test
     public void testDeadEnd() {
+        
         int[][] paths = { { 2, 3 }, { 0, 3 }, };
 
         Road road = new Road(paths);
         Cursor cursor = new Cursor(0, 0);
 
-        int depth = RoadMap.getDepth(road, Direction.DIRECTIONS_4, cursor, 1);
+        RoadMap roadMap = new RoadMap(road, Direction.DIRECTIONS_4, 2, 2);
+        int depth = roadMap.findMaxDepth(cursor);
+        
         assertEquals(2, depth);
     }
 }

@@ -40,7 +40,7 @@ public class RoadMapCodec implements Codec<RoadMap, IntegerGene> {
 
     @Override
     public Function<Genotype<IntegerGene>, RoadMap> decoder() {
-        return geno -> new RoadMap(geno, this.directions);
+        return geno -> new RoadMap(geno, this.directions, rows, columns);
     }
 
 }
