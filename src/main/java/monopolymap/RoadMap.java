@@ -22,8 +22,8 @@ public class RoadMap {
             Direction.LEFT
     );
     
-    public static final int ROWS = 5;
-    public static final int COLUMNS = 3;
+    public static final int ROWS = 9;
+    public static final int COLUMNS = 9;
     public static final int MAX_DEPTH = ROWS * COLUMNS;
     
     private Road road;
@@ -43,26 +43,24 @@ public class RoadMap {
     protected static Integer getDepth(Road road, Cursor currentCursor, int depth) {
         
         if (depth > MAX_DEPTH) {
-            logger.error("深度 {} 超出預期大小 {}", depth, MAX_DEPTH);
+            logger.error("Depth {} excced expected maximum size {}.", depth, MAX_DEPTH);
             throw new IndexOutOfBoundsException();
         }
         
         IDirection direction = DIRECTIONS.get(road.getDirectionIndex(currentCursor));
         Cursor nextCursor = direction.move(currentCursor);
 
-        // 超出範圍
         if (!road.isInBoundOf(nextCursor)) {
             return depth;
         }
         
-        // 已訪過
         if (road.isVisited(nextCursor)) {
             return depth;
         }
         
         road.mark(currentCursor);
 
-        logger.debug("\n路徑: \n{},\n目前指標:{}, 深度:{}, 方向：{}, 下一個指標：{}", road, currentCursor, depth, direction.getSymbol(), nextCursor);
+        logger.debug("\nRoad: \n{},\nCurrent Cursor:{}, Depth:{}, Direction：{}, Next Cursor：{}", road, currentCursor, depth, direction.getSymbol(), nextCursor);
         
         return getDepth(road, nextCursor, depth + 1);
     }

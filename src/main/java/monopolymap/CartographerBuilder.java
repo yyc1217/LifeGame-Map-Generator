@@ -10,7 +10,7 @@ public class CartographerBuilder {
     private Cartographer cartographer;
     
     private List<IDirection> directions;
-    private IDrawStrategy drawStrategy;
+    private IDrawStrategy drawStrategy = new ConsoleDrawStrategy();
     private Phenotype<IntegerGene, Integer> result;
     
     CartographerBuilder() {

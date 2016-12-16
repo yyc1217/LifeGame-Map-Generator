@@ -28,8 +28,8 @@ public class Cartographer {
     }
 
     public void draw() {
-        drawStrategy.setData(this.data)
-                    .drawWith(this.directionGuides);
+        this.drawStrategy.setData(this.data)
+                         .drawWith(this.directionGuides);
     }
 
 

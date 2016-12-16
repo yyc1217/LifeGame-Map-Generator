@@ -1,7 +1,6 @@
 package monopolymap;
 
 import static org.jenetics.engine.EvolutionResult.toBestPhenotype;
-import static org.jenetics.engine.limit.bySteadyFitness;
 
 import org.jenetics.IntegerGene;
 import org.jenetics.Phenotype;
@@ -26,8 +25,7 @@ public class MonopolyMapGenerator {
 
         Phenotype<IntegerGene, Integer> result = engine
                 .stream()
-                .limit(bySteadyFitness(10))
-                .limit(1)
+                .limit(500)
                 .peek(statistics)
                 .collect(toBestPhenotype());
 

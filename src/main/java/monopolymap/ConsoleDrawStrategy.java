@@ -26,7 +26,8 @@ public class ConsoleDrawStrategy implements IDrawStrategy {
             symbols.add(new ArrayList<Character>(data[x].length));
             
             for (int y = 0; y < data[x].length; y++) {
-                IDirection direction = directionGuides.get(data[x][y]);
+                int index = (data[x][y] + 1) % directionGuides.size();
+                IDirection direction = directionGuides.get(index);
                 symbols.get(x).add(direction.getSymbol());
             }
         }
