@@ -4,6 +4,10 @@ repositories {
     jcenter()
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 dependencies {
 
 	compile 'org.bitbucket.fwilhelm:org.jenetics:3.6.0'

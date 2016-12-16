@@ -24,8 +24,13 @@ public class RoadMap {
     
     public static final int ROWS = 5;
     public static final int COLUMNS = 3;
+    public static final int MAX_DEPTH = ROWS * COLUMNS;
     
     private Road road;
+    
+    RoadMap(Road road) {
+        this.road = road;
+    }
     
     RoadMap(Genotype<IntegerGene> genotype) {
         this.road = new Road(genotype);
@@ -35,19 +40,16 @@ public class RoadMap {
         return this.road;
     }
     
-    private static Integer getDepth(Road road, Cursor currentCursor, int depth) {
+    protected static Integer getDepth(Road road, Cursor currentCursor, int depth) {
         
-        logger.debug("Road: \n{},\nCursor: {}, depth: {}", road, currentCursor, depth);
-        
-        if (depth > ROWS * COLUMNS) {
-            logger.error("深度 {} 超出預期大小 {}", depth, ROWS * COLUMNS);
+        if (depth > MAX_DEPTH) {
+            logger.error("深度 {} 超出預期大小 {}", depth, MAX_DEPTH);
             throw new IndexOutOfBoundsException();
         }
         
         IDirection direction = DIRECTIONS.get(road.getDirectionIndex(currentCursor));
-        
         Cursor nextCursor = direction.move(currentCursor);
-        
+
         // 超出範圍
         if (!road.isInBoundOf(nextCursor)) {
             return depth;
@@ -60,11 +62,13 @@ public class RoadMap {
         
         road.mark(currentCursor);
 
+        logger.debug("\n路徑: \n{},\n目前指標:{}, 深度:{}, 方向：{}, 下一個指標：{}", road, currentCursor, depth, direction.getSymbol(), nextCursor);
+        
         return getDepth(road, nextCursor, depth + 1);
     }
 
     private static Function<RoadMap, Integer> FITNESS = roadMap -> {
-        return getDepth(roadMap.getRoad(), new Cursor(0, 0), 0);
+        return getDepth(roadMap.getRoad(), new Cursor(0, 0), 1);
     };
     
     public static final Function<RoadMap, Integer> fitness() {

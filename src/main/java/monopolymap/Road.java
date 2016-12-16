@@ -14,8 +14,12 @@ public class Road {
     
     private int[][] directions;
     
+    public Road(int[][] directions) {
+        this.directions = directions;
+    }
+    
     public Road(Genotype<IntegerGene> genotype) {
-        this.directions = toArray(genotype);
+        this(toArray(genotype));
     }
 
     public int getDirectionIndex(Cursor cursor) {

@@ -36,7 +36,7 @@ public class MonopolyMapGenerator {
         
         Cartographer cartographer = Cartographer.builder()
                 .directions(RoadMap.DIRECTIONS)
-                .with(new ConsoleDrawStrategy(result))
+                .data(result)
                 .build();
         
         cartographer.draw();
