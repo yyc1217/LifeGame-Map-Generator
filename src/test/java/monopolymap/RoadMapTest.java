@@ -4,6 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import monopolymap.road.Cursor;
+import monopolymap.road.Direction;
+import monopolymap.road.Road;
+import monopolymap.road.RoadMap;
+
 public class RoadMapTest {
 
     @Test

@@ -1,9 +1,12 @@
-package monopolymap;
+package monopolymap.draw;
 
 import java.util.List;
 
 import org.jenetics.IntegerGene;
 import org.jenetics.Phenotype;
+
+import monopolymap.road.Direction;
+import monopolymap.road.IDirection;
 
 public class CartographerBuilder {
 
