@@ -11,6 +11,13 @@ public class Cartographer {
     private IDrawStrategy drawStrategy;
     private Phenotype<IntegerGene, Integer> data;
     
+    public Cartographer(List<IDirection> directionGuides, Phenotype<IntegerGene, Integer> data,
+            IDrawStrategy drawStrategy) {
+        this.directionGuides = directionGuides;
+        this.data = data;
+        this.drawStrategy = drawStrategy;
+    }
+
     public static CartographerBuilder builder() {
         return new CartographerBuilder();
     }

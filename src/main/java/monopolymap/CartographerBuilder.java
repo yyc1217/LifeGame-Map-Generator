@@ -13,10 +13,6 @@ public class CartographerBuilder {
     private IDrawStrategy drawStrategy = new ConsoleDrawStrategy();
     private Phenotype<IntegerGene, Integer> result;
     
-    CartographerBuilder() {
-        this.cartographer = new Cartographer();
-    }
-    
     public CartographerBuilder directions(List<IDirection> directions) {
         this.directions = directions;
         return this;
@@ -33,9 +29,7 @@ public class CartographerBuilder {
     }
     
     public Cartographer build() {
-        this.cartographer.setDirectionGuides(directions);
-        this.cartographer.setData(this.result);
-        this.cartographer.setDrawStrategy(this.drawStrategy);
+        this.cartographer = new Cartographer(this.directions, this.result, this.drawStrategy);
         return this.cartographer;
     }
 }

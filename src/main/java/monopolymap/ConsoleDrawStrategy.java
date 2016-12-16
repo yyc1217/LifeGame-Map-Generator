@@ -21,14 +21,14 @@ public class ConsoleDrawStrategy implements IDrawStrategy {
     
         List<List<Character>> symbols = new ArrayList<List<Character>>(data.length);
         
-        for (int x = 0; x < data.length; x++) {
+        for (int row = 0; row < data.length; row++) {
             
-            symbols.add(new ArrayList<Character>(data[x].length));
+            symbols.add(new ArrayList<Character>(data[row].length));
             
-            for (int y = 0; y < data[x].length; y++) {
-                int index = (data[x][y] + 1) % directionGuides.size();
+            for (int column = 0; column < data[row].length; column++) {
+                int index = data[row][column];
                 IDirection direction = directionGuides.get(index);
-                symbols.get(x).add(direction.getSymbol());
+                symbols.get(row).add(direction.getSymbol());
             }
         }
         

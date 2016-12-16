@@ -1,6 +1,5 @@
 package monopolymap;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -14,40 +13,35 @@ import org.slf4j.LoggerFactory;
 public class RoadMap {
 
     private static final Logger logger = LoggerFactory.getLogger(RoadMap.class);
-    
-    public static final List<IDirection> DIRECTIONS = Arrays.asList(
-            Direction.TOP,
-            Direction.RIGHT,
-            Direction.BOTTOM,
-            Direction.LEFT
-    );
-    
-    public static final int ROWS = 9;
-    public static final int COLUMNS = 9;
+
+    public static final int ROWS = 3;
+    public static final int COLUMNS = 3;
     public static final int MAX_DEPTH = ROWS * COLUMNS;
     
     private Road road;
+    private List<IDirection> directions;
     
-    RoadMap(Road road) {
-        this.road = road;
-    }
-    
-    RoadMap(Genotype<IntegerGene> genotype) {
+    RoadMap(Genotype<IntegerGene> genotype, List<IDirection> directions) {
         this.road = new Road(genotype);
+        this.directions = directions;
     }
     
     public Road getRoad() {
         return this.road;
     }
     
-    protected static Integer getDepth(Road road, Cursor currentCursor, int depth) {
+    public List<IDirection> getDirections() {
+        return this.directions;
+    }
+    
+    protected static Integer getDepth(Road road, List<IDirection> directions, Cursor currentCursor, int depth) {
         
         if (depth > MAX_DEPTH) {
             logger.error("Depth {} excced expected maximum size {}.", depth, MAX_DEPTH);
             throw new IndexOutOfBoundsException();
         }
         
-        IDirection direction = DIRECTIONS.get(road.getDirectionIndex(currentCursor));
+        IDirection direction = directions.get(road.getDirectionIndex(currentCursor));
         Cursor nextCursor = direction.move(currentCursor);
 
         if (!road.isInBoundOf(nextCursor)) {
@@ -62,26 +56,27 @@ public class RoadMap {
 
         logger.debug("\nRoad: \n{},\nCurrent Cursor:{}, Depth:{}, Direction：{}, Next Cursor：{}", road, currentCursor, depth, direction.getSymbol(), nextCursor);
         
-        return getDepth(road, nextCursor, depth + 1);
+        return getDepth(road, directions, nextCursor, depth + 1);
     }
 
     private static Function<RoadMap, Integer> FITNESS = roadMap -> {
-        return getDepth(roadMap.getRoad(), new Cursor(0, 0), 1);
+        return getDepth(roadMap.getRoad(), roadMap.getDirections(), new Cursor(0, 0), 1);
     };
     
     public static final Function<RoadMap, Integer> fitness() {
         return FITNESS;
     }
 
-    public static final Codec<RoadMap, IntegerGene> codec() {
+    public static final Codec<RoadMap, IntegerGene> codec(List<IDirection> directions) {
+        
         Genotype<IntegerGene> genotype = Genotype.of(
-                IntegerChromosome.of(0, DIRECTIONS.size() - 1, COLUMNS), 
+                IntegerChromosome.of(0, directions.size() - 1, COLUMNS), 
                 ROWS
         );
     
         Codec<RoadMap, IntegerGene> codec = Codec.of(
                 genotype,
-                RoadMap::new
+                geno -> new RoadMap(geno, directions)
         );
 
         return codec;

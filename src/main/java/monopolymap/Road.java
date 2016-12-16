@@ -23,12 +23,12 @@ public class Road {
     }
 
     public int getDirectionIndex(Cursor cursor) {
-        return this.directions[cursor.x][cursor.y];
+        return this.directions[cursor.row][cursor.column];
     }
 
     public boolean isInBoundOf(Cursor cursor) {
-        int x = cursor.x;
-        int y = cursor.y;
+        int x = cursor.row;
+        int y = cursor.column;
         
         boolean xIsInBound = 0 <= x && x < this.directions.length;
         boolean yIsInBound = xIsInBound && 0 <= y && y < this.directions[x].length;
@@ -36,11 +36,11 @@ public class Road {
     }
 
     public boolean isVisited(Cursor cursor) {
-        return this.directions[cursor.x][cursor.y] < 0;
+        return this.directions[cursor.row][cursor.column] < 0;
     }
 
     public void mark(Cursor cursor) {
-        this.directions[cursor.x][cursor.y] = MARKED;
+        this.directions[cursor.row][cursor.column] = MARKED;
     }
     
     public static final int[][] toArray(Genotype<IntegerGene> genotype) {

@@ -2,16 +2,16 @@ package monopolymap;
 
 public class Cursor {
 
-    public int x;
-    public int y;
+    public int row;
+    public int column;
     
-    Cursor(int x, int y) {
-        this.x = x;
-        this.y = y;
+    Cursor(int row, int column) {
+        this.row = row;
+        this.column = column;
     }
 
     @Override
     public String toString() {
-        return "[x=" + x + ",y=" + y + "]";
+        return "[row=" + row + ",column=" + column + "]";
     }
 }
