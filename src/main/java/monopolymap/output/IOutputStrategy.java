@@ -8,6 +8,7 @@ import org.jenetics.Phenotype;
 import monopolymap.road.IDirection;
 
 public interface IOutputStrategy {
-    void with(List<IDirection> directionGuides);
+    IOutputStrategy with(List<IDirection> directionGuides);
     IOutputStrategy setData(Phenotype<IntegerGene, Integer> data);
+    void output();
 }
