@@ -13,8 +13,8 @@ import monopolymap.road.RoadMap;
 
 public abstract class AbstractOutputStrategy implements IOutputStrategy {
     
-    private static final Integer WILDERNESS = -1;
-    private static final Character WILDERNESS_SYMBOL = '*';
+    public static final Integer WILDERNESS = -1;
+    public static final Character WILDERNESS_SYMBOL = '*';
     
     private Phenotype<IntegerGene, Long> phenotype;
     protected List<IDirection> directionGuides;
@@ -42,7 +42,7 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
         return this.mergeMap(originalPaths, walkedPaths);
     }
     
-    private int[][] mergeMap(int[][] originalPaths, int[][] walkedPaths) {
+    public int[][] mergeMap(int[][] originalPaths, int[][] walkedPaths) {
         
         int[][] mergedMap = originalPaths.clone();
         
@@ -62,7 +62,7 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
         return this.directionGuides;
     }
     
-    protected List<List<Character>> toSymbols(int[][] data, List<IDirection> directionGuides) {
+    public List<List<Character>> toSymbols(int[][] data, List<IDirection> directionGuides) {
         
         List<List<Character>> symbols = new ArrayList<List<Character>>(data.length);
         
@@ -80,7 +80,7 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
         return symbols;
     }
     
-    private Character toSymbol(int index) {
+    protected Character toSymbol(int index) {
         Character symbol = WILDERNESS_SYMBOL;
         
         if (!WILDERNESS.equals(index)) {

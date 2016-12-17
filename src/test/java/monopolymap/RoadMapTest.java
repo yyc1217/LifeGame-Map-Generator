@@ -20,19 +20,6 @@ public class RoadMapTest {
     
     private List<IDirection> testDirections = Direction.DIRECTIONS_4;
     
-    private int[][] toDirectionIndex(IDirection[][] directions) {
-        
-        int[][] indexes = new int[directions.length][directions[0].length];
-        
-        for (int row = 0; row < directions.length; row++) {
-            for (int column = 0; column < directions[row].length; column++) {
-                indexes[row][column] = testDirections.indexOf(directions[row][column]);
-            }
-        }
-        
-        return indexes;
-    }
-    
     @Test
     public void testFull() {
 
@@ -41,7 +28,7 @@ public class RoadMapTest {
                 { Direction.RIGHT, Direction.TOP }
         };
         
-        int[][] indexes = this.toDirectionIndex(directions);
+        int[][] indexes = DirectionHelper.toDirectionIndex(directions, testDirections);
 
         Road road = new Road(indexes);
         Cursor cursor = new Cursor(0, 0);
@@ -62,7 +49,7 @@ public class RoadMapTest {
                 { Direction.TOP, Direction.LEFT },
         };
         
-        int[][] indexes = this.toDirectionIndex(directions);
+        int[][] indexes = DirectionHelper.toDirectionIndex(directions, testDirections);
 
         Road road = new Road(indexes);
         Cursor cursor = new Cursor(0, 0);
