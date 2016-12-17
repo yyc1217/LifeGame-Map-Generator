@@ -15,7 +15,7 @@ public class ConsoleOutputStrategy extends AbstractOutputStrategy implements IOu
     private List<IDirection> directionGuides;
 
     @Override
-    public IOutputStrategy setData(Phenotype<IntegerGene, Integer> data) {
+    public IOutputStrategy setData(Phenotype<IntegerGene, Long> data) {
         this.data = Road.toArray(data.getGenotype());
         return this;
     }

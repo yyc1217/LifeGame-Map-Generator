@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import monopolymap.road.Cursor;
 import monopolymap.road.Direction;
@@ -14,6 +16,8 @@ import monopolymap.road.RoadMap;
 
 public class RoadMapTest {
 
+    private static final Logger logger = LoggerFactory.getLogger(RoadMapTest.class);
+    
     private List<IDirection> testDirections = Direction.DIRECTIONS_4;
     
     private int[][] toDirectionIndex(IDirection[][] directions) {
@@ -43,7 +47,9 @@ public class RoadMapTest {
         Cursor cursor = new Cursor(0, 0);
         
         RoadMap roadMap = new RoadMap(road, this.testDirections, 2, 2);
-        int depth = roadMap.findMaxDepth(cursor);
+        long depth = roadMap.findMaxDepth(cursor);
+        
+        logger.debug(road.toString());
         
         assertEquals(4, depth);
     }
@@ -62,7 +68,9 @@ public class RoadMapTest {
         Cursor cursor = new Cursor(0, 0);
 
         RoadMap roadMap = new RoadMap(road, testDirections, 2, 2);
-        int depth = roadMap.findMaxDepth(cursor);
+        long depth = roadMap.findMaxDepth(cursor);
+        
+        logger.debug(road.toString());
         
         assertEquals(2, depth);
     }

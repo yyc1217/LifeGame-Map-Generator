@@ -11,12 +11,12 @@ public class Cartographer {
 
     private List<IDirection> directionGuides;
     private IOutputStrategy outputStrategy;
-    private Phenotype<IntegerGene, Integer> data;
+    private Phenotype<IntegerGene, Long> data;
     
-    public Cartographer(List<IDirection> directionGuides, Phenotype<IntegerGene, Integer> data,
+    public Cartographer(List<IDirection> directionGuides, Phenotype<IntegerGene, Long> result,
             IOutputStrategy outputStrategy) {
         this.directionGuides = directionGuides;
-        this.data = data;
+        this.data = result;
         this.outputStrategy = outputStrategy;
     }
 
@@ -32,14 +32,13 @@ public class Cartographer {
         this.outputStrategy = outputStrategy;
     }
     
-    public void setData(Phenotype<IntegerGene, Integer> data) {
+    public void setData(Phenotype<IntegerGene, Long> data) {
         this.data = data;
     }
 
     public void output() {
         this.outputStrategy.setData(this.data)
-                         .with(this.directionGuides);
+                         .with(this.directionGuides)
+                         .output();
     }
-
-
 }

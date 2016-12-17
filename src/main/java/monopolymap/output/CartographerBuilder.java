@@ -14,7 +14,7 @@ public class CartographerBuilder {
     
     private List<IDirection> directions = Direction.DIRECTIONS_4;
     private IOutputStrategy outputStrategy = new ConsoleOutputStrategy();
-    private Phenotype<IntegerGene, Integer> result;
+    private Phenotype<IntegerGene, Long> result;
     
     public CartographerBuilder directions(List<IDirection> directions) {
         this.directions = directions;
@@ -26,7 +26,7 @@ public class CartographerBuilder {
         return this;
     }
 
-    public CartographerBuilder data(Phenotype<IntegerGene, Integer> result) {
+    public CartographerBuilder data(Phenotype<IntegerGene, Long> result) {
         this.result = result;
         return this;
     }

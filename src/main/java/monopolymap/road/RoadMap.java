@@ -1,5 +1,6 @@
 package monopolymap.road;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -36,16 +37,29 @@ public class RoadMap {
         return this.directions;
     }
     
-    private Integer maxDepth() {
+    public Long getMaxDepth() {
+        
+        int[][] paths = road.getPaths();
+        
+        Long sum =  Arrays.stream(paths)
+                .mapToLong(x -> Arrays.stream(x)
+                        .filter(Road.MARKED::equals)
+                        .count())
+                .sum();
+        
+        return sum;
+    }
+    
+    private Integer expectedMaxDepth() {
         return this.rows * this.columns;
     }
     
-    protected Integer getDepth(Cursor currentCursor, int depth) {
+    protected void walk(Cursor currentCursor, int depth) {
         
-        int expectedMaximumDept = maxDepth();
+        int expectedMaximumDepth = expectedMaxDepth();
         
-        if (depth > expectedMaximumDept) {
-            logger.error("Depth {} excced expected maximum size {}.", depth, expectedMaximumDept);
+        if (depth > expectedMaximumDepth) {
+            logger.error("Depth {} excced expected maximum size {}.", depth, expectedMaximumDepth);
             throw new IndexOutOfBoundsException();
         }
         
@@ -53,25 +67,25 @@ public class RoadMap {
         Cursor nextCursor = direction.move(currentCursor);
 
         if (!this.road.isInBoundOf(nextCursor)) {
-            return depth;
+            return;
         }
+        this.road.mark(currentCursor);
         
         if (this.road.isVisited(nextCursor)) {
-            return depth;
+            return;
         }
-        
-        this.road.mark(currentCursor);
-
+ 
         logger.debug("\nRoad: \n{},\nCurrent Cursor:{}, Depth:{}, Direction：{}, Next Cursor：{}", this.road, currentCursor, depth, direction.getSymbol(), nextCursor);
         
-        return this.getDepth(nextCursor, depth + 1);
+        this.walk(nextCursor, depth + 1);
     }
 
-    public static Function<RoadMap, Integer> FITNESS = roadMap -> {
+    public static Function<RoadMap, Long> FITNESS = roadMap -> {
         return roadMap.findMaxDepth(new Cursor(0, 0));
     };
     
-    public Integer findMaxDepth(Cursor startAt) {
-        return this.getDepth(startAt, 1);
+    public Long findMaxDepth(Cursor startAt) {
+        this.walk(startAt, 1);
+        return this.getMaxDepth();
     }
 }

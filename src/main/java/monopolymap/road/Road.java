@@ -10,37 +10,41 @@ import org.jenetics.IntegerGene;
 
 public class Road {
 
-    private static final int MARKED = -99;
+    public static final Integer MARKED = -99;
     
-    private int[][] directions;
+    private int[][] paths;
     
     public Road(int[][] directions) {
-        this.directions = directions;
+        this.paths = directions;
     }
     
     public Road(Genotype<IntegerGene> genotype) {
         this(toArray(genotype));
     }
 
+    public int[][] getPaths() {
+        return this.paths;
+    }
+    
     public int getDirectionIndex(Cursor cursor) {
-        return this.directions[cursor.row][cursor.column];
+        return this.paths[cursor.row][cursor.column];
     }
 
     public boolean isInBoundOf(Cursor cursor) {
         int x = cursor.row;
         int y = cursor.column;
         
-        boolean xIsInBound = 0 <= x && x < this.directions.length;
-        boolean yIsInBound = xIsInBound && 0 <= y && y < this.directions[x].length;
+        boolean xIsInBound = 0 <= x && x < this.paths.length;
+        boolean yIsInBound = xIsInBound && 0 <= y && y < this.paths[x].length;
         return xIsInBound && yIsInBound;
     }
 
     public boolean isVisited(Cursor cursor) {
-        return this.directions[cursor.row][cursor.column] < 0;
+        return this.paths[cursor.row][cursor.column] < 0;
     }
 
     public void mark(Cursor cursor) {
-        this.directions[cursor.row][cursor.column] = MARKED;
+        this.paths[cursor.row][cursor.column] = MARKED;
     }
     
     public static final int[][] toArray(Genotype<IntegerGene> genotype) {
@@ -52,6 +56,6 @@ public class Road {
 
     @Override
     public String toString() {
-        return Stream.of(this.directions).map(Arrays::toString).collect(Collectors.joining("\n"));
+        return Stream.of(this.paths).map(Arrays::toString).collect(Collectors.joining("\n"));
     }
 }

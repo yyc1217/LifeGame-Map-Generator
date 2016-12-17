@@ -31,13 +31,13 @@ public class MonopolyMapGenerator {
 
         List<IDirection> directions = Direction.DIRECTIONS_4;
         
-        Engine<IntegerGene, Integer> engine = Engine
+        Engine<IntegerGene, Long> engine = Engine
                 .builder(RoadMap.FITNESS, new RoadMapCodec(directions, 5, 7))
                 .build();
 
-        EvolutionStatistics<Integer, ?> statistics = EvolutionStatistics.ofNumber();
+        EvolutionStatistics<Long, ?> statistics = EvolutionStatistics.ofNumber();
 
-        Phenotype<IntegerGene, Integer> result = engine
+        Phenotype<IntegerGene, Long> result = engine
                 .stream()
                 .limit(500)
                 .peek(statistics)

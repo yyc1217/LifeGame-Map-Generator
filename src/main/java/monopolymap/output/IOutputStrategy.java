@@ -9,6 +9,6 @@ import monopolymap.road.IDirection;
 
 public interface IOutputStrategy {
     IOutputStrategy with(List<IDirection> directionGuides);
-    IOutputStrategy setData(Phenotype<IntegerGene, Integer> data);
+    IOutputStrategy setData(Phenotype<IntegerGene, Long> data);
     void output();
 }
