@@ -1,4 +1,4 @@
-package monopolymap.draw;
+package monopolymap.output;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class CartographerBuilder {
     private Cartographer cartographer;
     
     private List<IDirection> directions = Direction.DIRECTIONS_4;
-    private IDrawStrategy drawStrategy = new ConsoleDrawStrategy();
+    private IOutputStrategy outputStrategy = new ConsoleOutputStrategy();
     private Phenotype<IntegerGene, Integer> result;
     
     public CartographerBuilder directions(List<IDirection> directions) {
@@ -21,8 +21,8 @@ public class CartographerBuilder {
         return this;
     }
 
-    public CartographerBuilder with(IDrawStrategy drawStrategy) {
-        this.drawStrategy = drawStrategy;
+    public CartographerBuilder with(IOutputStrategy outputStrategy) {
+        this.outputStrategy = outputStrategy;
         return this;
     }
 
@@ -32,7 +32,7 @@ public class CartographerBuilder {
     }
     
     public Cartographer build() {
-        this.cartographer = new Cartographer(this.directions, this.result, this.drawStrategy);
+        this.cartographer = new Cartographer(this.directions, this.result, this.outputStrategy);
         return this.cartographer;
     }
 }

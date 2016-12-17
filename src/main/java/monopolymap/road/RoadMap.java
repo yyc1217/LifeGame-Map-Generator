@@ -17,11 +17,11 @@ public class RoadMap {
     private int rows;
     private int columns;
     
-    RoadMap(Genotype<IntegerGene> genotype, List<IDirection> directions, int rows, int columns) {
+    public RoadMap(Genotype<IntegerGene> genotype, List<IDirection> directions, int rows, int columns) {
         this(new Road(genotype), directions, rows, columns);
     }
     
-    RoadMap(Road road, List<IDirection> directions, int rows, int columns) {
+    public RoadMap(Road road, List<IDirection> directions, int rows, int columns) {
         this.road = road;
         this.directions = directions;
         this.rows = rows;
@@ -71,7 +71,7 @@ public class RoadMap {
         return roadMap.findMaxDepth(new Cursor(0, 0));
     };
     
-    protected Integer findMaxDepth(Cursor startAt) {
+    public Integer findMaxDepth(Cursor startAt) {
         return this.getDepth(startAt, 1);
     }
 }

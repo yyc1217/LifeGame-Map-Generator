@@ -1,11 +1,11 @@
-package monopolymap.draw;
+package monopolymap.output;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import monopolymap.road.IDirection;
 
-public abstract class AbstractDrawStrategy implements IDrawStrategy {
+public abstract class AbstractOutputStrategy implements IOutputStrategy {
 
     protected List<List<Character>> toSymbols(int[][] data, List<IDirection> directionGuides) {
         

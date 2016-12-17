@@ -1,4 +1,4 @@
-package monopolymap.draw;
+package monopolymap.output;
 
 import java.util.List;
 
@@ -8,18 +8,18 @@ import org.jenetics.Phenotype;
 import monopolymap.road.IDirection;
 import monopolymap.road.Road;
 
-public class ConsoleDrawStrategy extends AbstractDrawStrategy implements IDrawStrategy {
+public class ConsoleOutputStrategy extends AbstractOutputStrategy implements IOutputStrategy {
 
     private int[][] data;
 
     @Override
-    public IDrawStrategy setData(Phenotype<IntegerGene, Integer> data) {
+    public IOutputStrategy setData(Phenotype<IntegerGene, Integer> data) {
         this.data = Road.toArray(data.getGenotype());
         return this;
     }
     
     @Override
-    public void drawWith(List<IDirection> directionGuides) {
+    public void with(List<IDirection> directionGuides) {
     
         List<List<Character>> symbols = this.toSymbols(data, directionGuides);
         

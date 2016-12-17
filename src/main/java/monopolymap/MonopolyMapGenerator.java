@@ -11,7 +11,7 @@ import org.jenetics.engine.EvolutionStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import monopolymap.draw.Cartographer;
+import monopolymap.output.Cartographer;
 import monopolymap.road.Direction;
 import monopolymap.road.IDirection;
 import monopolymap.road.RoadMap;
@@ -51,7 +51,7 @@ public class MonopolyMapGenerator {
                 .data(result)
                 .build();
         
-        cartographer.draw();
+        cartographer.output();
     }
 
 }
