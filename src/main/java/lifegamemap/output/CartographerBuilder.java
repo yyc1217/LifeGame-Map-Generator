@@ -1,12 +1,12 @@
-package monopolymap.output;
+package lifegamemap.output;
 
 import java.util.List;
 
 import org.jenetics.IntegerGene;
 import org.jenetics.Phenotype;
 
-import monopolymap.road.Direction;
-import monopolymap.road.IDirection;
+import lifegamemap.road.Direction;
+import lifegamemap.road.IDirection;
 
 public class CartographerBuilder {
 

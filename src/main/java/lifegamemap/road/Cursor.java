@@ -1,4 +1,4 @@
-package monopolymap.road;
+package lifegamemap.road;
 
 public class Cursor {
 

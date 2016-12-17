@@ -2,7 +2,7 @@ package monopolymap;
 
 import java.util.List;
 
-import monopolymap.road.IDirection;
+import lifegamemap.road.IDirection;
 
 public class DirectionHelper {
     

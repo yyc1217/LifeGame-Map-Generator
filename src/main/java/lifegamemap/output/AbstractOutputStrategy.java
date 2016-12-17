@@ -1,4 +1,4 @@
-package monopolymap.output;
+package lifegamemap.output;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.List;
 import org.jenetics.IntegerGene;
 import org.jenetics.Phenotype;
 
-import monopolymap.road.Cursor;
-import monopolymap.road.IDirection;
-import monopolymap.road.Road;
-import monopolymap.road.RoadMap;
+import lifegamemap.road.Cursor;
+import lifegamemap.road.IDirection;
+import lifegamemap.road.Road;
+import lifegamemap.road.RoadMap;
 
 public abstract class AbstractOutputStrategy implements IOutputStrategy {
     

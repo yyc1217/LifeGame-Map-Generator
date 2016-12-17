@@ -8,11 +8,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import monopolymap.road.Cursor;
-import monopolymap.road.Direction;
-import monopolymap.road.IDirection;
-import monopolymap.road.Road;
-import monopolymap.road.RoadMap;
+import lifegamemap.road.Cursor;
+import lifegamemap.road.Direction;
+import lifegamemap.road.IDirection;
+import lifegamemap.road.Road;
+import lifegamemap.road.RoadMap;
 
 public class RoadMapTest {
 

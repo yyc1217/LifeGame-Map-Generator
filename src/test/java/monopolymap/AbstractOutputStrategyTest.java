@@ -11,10 +11,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import monopolymap.output.AbstractOutputStrategy;
-import monopolymap.road.Direction;
-import monopolymap.road.IDirection;
-import monopolymap.road.Road;
+import lifegamemap.output.AbstractOutputStrategy;
+import lifegamemap.road.Direction;
+import lifegamemap.road.IDirection;
+import lifegamemap.road.Road;
 
 public class AbstractOutputStrategyTest {
 

@@ -1,4 +1,4 @@
-package monopolymap.output;
+package lifegamemap.output;
 
 import java.util.List;
 import java.util.stream.Collectors;
