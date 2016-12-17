@@ -37,7 +37,7 @@ public class Cartographer {
     }
 
     public void output() {
-        this.outputStrategy.setData(this.data)
+        this.outputStrategy.setPhenotype(this.data)
                          .with(this.directionGuides)
                          .output();
     }

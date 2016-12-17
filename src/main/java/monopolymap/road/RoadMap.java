@@ -18,6 +18,14 @@ public class RoadMap {
     private int rows;
     private int columns;
     
+    public RoadMap(Genotype<IntegerGene> genotype, List<IDirection> directions) {
+        this(new Road(genotype), directions);
+    }
+    
+    public RoadMap(Road road, List<IDirection> directions) {
+        this(road, directions, road.getPaths().length, road.getPaths()[0].length);
+    }
+    
     public RoadMap(Genotype<IntegerGene> genotype, List<IDirection> directions, int rows, int columns) {
         this(new Road(genotype), directions, rows, columns);
     }
@@ -43,7 +51,7 @@ public class RoadMap {
         
         Long sum =  Arrays.stream(paths)
                 .mapToLong(x -> Arrays.stream(x)
-                        .filter(Road.MARKED::equals)
+                        .filter(Road.WALKED::equals)
                         .count())
                 .sum();
         

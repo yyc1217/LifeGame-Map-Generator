@@ -10,7 +10,7 @@ import org.jenetics.IntegerGene;
 
 public class Road {
 
-    public static final Integer MARKED = -99;
+    public static final Integer WALKED = -99;
     
     private int[][] paths;
     
@@ -44,7 +44,7 @@ public class Road {
     }
 
     public void mark(Cursor cursor) {
-        this.paths[cursor.row][cursor.column] = MARKED;
+        this.paths[cursor.row][cursor.column] = WALKED;
     }
     
     public static final int[][] toArray(Genotype<IntegerGene> genotype) {
