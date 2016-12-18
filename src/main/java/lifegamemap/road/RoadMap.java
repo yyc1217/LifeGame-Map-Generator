@@ -51,7 +51,7 @@ public class RoadMap {
         
         Long sum =  Arrays.stream(paths)
                 .mapToLong(x -> Arrays.stream(x)
-                        .filter(Road.WALKED::equals)
+                        .filter(path -> Road.WALKED.equals(path) || Road.DESTINATION.equals(path))
                         .count())
                 .sum();
         
@@ -80,6 +80,7 @@ public class RoadMap {
         this.road.mark(currentCursor);
         
         if (this.road.isVisited(nextCursor)) {
+            this.road.endAt(currentCursor);
             return;
         }
  

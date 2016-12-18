@@ -21,6 +21,8 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
     
     public static final Integer WILDERNESS = -1;
     public static final Character WILDERNESS_SYMBOL = '*';
+    public static final Integer DESTINATION = -2;
+    public static final Character DESTINATION_SYMBOL = 'E';
     
     private OutputStream outputStream;
     
@@ -60,6 +62,13 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
         
         for (int rows = 0; rows < originalPaths.length; rows++) {
             for (int columns = 0; columns < originalPaths[0].length; columns++) {
+                
+                boolean isDestination = Road.DESTINATION.equals(walkedPaths[rows][columns]);
+                if (isDestination) {
+                    mergedMap[rows][columns] = DESTINATION;
+                    continue;
+                }
+                
                 boolean notWalked = !Road.WALKED.equals(walkedPaths[rows][columns]) ;
                 if (notWalked) {
                     mergedMap[rows][columns] = WILDERNESS;
@@ -95,11 +104,16 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
     protected Character toSymbol(int index) {
         Character symbol = WILDERNESS_SYMBOL;
         
+        if (DESTINATION.equals(index)) {
+            symbol = DESTINATION_SYMBOL;
+            return symbol;
+        }
+
         if (!WILDERNESS.equals(index)) {
             IDirection direction = directionGuides.get(index);
             symbol = direction.getSymbol();
         }
-        
+
         return symbol;
     }
     

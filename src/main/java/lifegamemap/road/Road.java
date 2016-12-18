@@ -11,6 +11,7 @@ import org.jenetics.IntegerGene;
 public class Road {
 
     public static final Integer WALKED = -99;
+    public static final Integer DESTINATION = -999;
     
     private int[][] paths;
     
@@ -45,6 +46,10 @@ public class Road {
 
     public void mark(Cursor cursor) {
         this.paths[cursor.row][cursor.column] = WALKED;
+    }
+    
+    public void endAt(Cursor cursor) {
+        this.paths[cursor.row][cursor.column] = DESTINATION;
     }
     
     public static final int[][] toArray(Genotype<IntegerGene> genotype) {

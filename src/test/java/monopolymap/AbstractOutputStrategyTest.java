@@ -50,25 +50,26 @@ public class AbstractOutputStrategyTest {
  
         int[][] walkedPaths = new int[][] {
             { Road.WALKED, 0 },
-            { Road.WALKED, 0 }
+            { Road.WALKED, Road.DESTINATION }
         };
         
         int[][] actualMap = strategy.mergeMap(originalPaths, walkedPaths);
         
         int[][] expectedMap = new int[][] {
             { 5, AbstractOutputStrategy.WILDERNESS },
-            { 5, AbstractOutputStrategy.WILDERNESS }
+            { 5, AbstractOutputStrategy.DESTINATION }
         };
         
         assertArrayEquals(expectedMap, actualMap);
     }
+    
 
     @Test
     public void testToSymbols() {
         
         int[][] data = new int[][] {
             { 0, 1 },
-            { AbstractOutputStrategy.WILDERNESS, testDirections.size() -1 }
+            { AbstractOutputStrategy.WILDERNESS, AbstractOutputStrategy.DESTINATION }
         };
         
         List<List<Character>> expectedSymbols = new ArrayList<List<Character>>(2);
@@ -80,7 +81,7 @@ public class AbstractOutputStrategyTest {
         
         List<Character> row2 = Arrays.asList(
                 AbstractOutputStrategy.WILDERNESS_SYMBOL,
-                testDirections.get(data[1][1]).getSymbol()
+                AbstractOutputStrategy.DESTINATION_SYMBOL
         );
         expectedSymbols.add(row2);
         
