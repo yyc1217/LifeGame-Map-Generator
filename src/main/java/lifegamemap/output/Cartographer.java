@@ -8,6 +8,11 @@ import org.jenetics.Phenotype;
 
 import lifegamemap.road.IDirection;
 
+/**
+ * Used to output walked result.
+ * @author Yeh-Yung
+ *
+ */
 public class Cartographer {
 
     private List<IDirection> directionGuides;

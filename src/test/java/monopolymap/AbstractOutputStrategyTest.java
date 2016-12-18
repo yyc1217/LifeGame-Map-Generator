@@ -15,7 +15,7 @@ import org.junit.Test;
 import lifegamemap.output.AbstractOutputStrategy;
 import lifegamemap.road.Direction;
 import lifegamemap.road.IDirection;
-import lifegamemap.road.Road;
+import lifegamemap.road.Map;
 
 public class AbstractOutputStrategyTest {
 
@@ -49,8 +49,8 @@ public class AbstractOutputStrategyTest {
         };
  
         int[][] walkedPaths = new int[][] {
-            { Road.WALKED, 0 },
-            { Road.WALKED, Road.DESTINATION }
+            { Map.WALKED, 0 },
+            { Map.WALKED, Map.DESTINATION }
         };
         
         int[][] actualMap = strategy.mergeMap(originalPaths, walkedPaths);

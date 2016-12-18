@@ -14,8 +14,8 @@ import org.jenetics.Phenotype;
 
 import lifegamemap.road.Cursor;
 import lifegamemap.road.IDirection;
-import lifegamemap.road.Road;
-import lifegamemap.road.RoadMap;
+import lifegamemap.road.Map;
+import lifegamemap.road.MapWalker;
 
 public abstract class AbstractOutputStrategy implements IOutputStrategy {
     
@@ -47,11 +47,11 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
 
     protected int[][] getData() {
         
-        int[][] originalPaths = Road.toArray(this.phenotype.getGenotype());
+        int[][] originalPaths = Map.toArray(this.phenotype.getGenotype());
         
-        RoadMap roadMap = new RoadMap(this.phenotype.getGenotype(), this.directionGuides);
-        roadMap.findMaxDepth(new Cursor(0, 0));
-        int[][] walkedPaths = roadMap.getRoad().getPaths();
+        MapWalker mapWalker = new MapWalker(this.phenotype.getGenotype(), this.directionGuides);
+        mapWalker.findMaxDepth(new Cursor(0, 0));
+        int[][] walkedPaths = mapWalker.getRoad().getDirectionIndexes();
         
         return this.mergeMap(originalPaths, walkedPaths);
     }
@@ -63,13 +63,13 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
         for (int rows = 0; rows < originalPaths.length; rows++) {
             for (int columns = 0; columns < originalPaths[0].length; columns++) {
                 
-                boolean isDestination = Road.DESTINATION.equals(walkedPaths[rows][columns]);
+                boolean isDestination = Map.DESTINATION.equals(walkedPaths[rows][columns]);
                 if (isDestination) {
                     mergedMap[rows][columns] = DESTINATION;
                     continue;
                 }
                 
-                boolean notWalked = !Road.WALKED.equals(walkedPaths[rows][columns]) ;
+                boolean notWalked = !Map.WALKED.equals(walkedPaths[rows][columns]) ;
                 if (notWalked) {
                     mergedMap[rows][columns] = WILDERNESS;
                 }
@@ -83,17 +83,23 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
         return this.directionGuides;
     }
     
-    public List<List<Character>> toSymbols(int[][] data, List<IDirection> directionGuides) {
+    /**
+     * Convert {@code directionIndexes} to symbols based on {@code directionGuides}
+     * @param directionIndexes
+     * @param directionGuides
+     * @return List<List<Character>>
+     */
+    public List<List<Character>> toSymbols(int[][] directionIndexes, List<IDirection> directionGuides) {
         
-        List<List<Character>> symbols = new ArrayList<List<Character>>(data.length);
+        List<List<Character>> symbols = new ArrayList<List<Character>>(directionIndexes.length);
         
-        for (int row = 0; row < data.length; row++) {
+        for (int row = 0; row < directionIndexes.length; row++) {
             
-            symbols.add(new ArrayList<Character>(data[row].length));
+            symbols.add(new ArrayList<Character>(directionIndexes[row].length));
             
-            for (int column = 0; column < data[row].length; column++) {
+            for (int column = 0; column < directionIndexes[row].length; column++) {
                 
-                int index = data[row][column];
+                int index = directionIndexes[row][column];
                 symbols.get(row).add(toSymbol(index));
             }
         }
@@ -101,20 +107,18 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
         return symbols;
     }
     
-    protected Character toSymbol(int index) {
-        Character symbol = WILDERNESS_SYMBOL;
+    protected Character toSymbol(int directionIndex) {
         
-        if (DESTINATION.equals(index)) {
-            symbol = DESTINATION_SYMBOL;
-            return symbol;
+        if (DESTINATION.equals(directionIndex)) {
+            return DESTINATION_SYMBOL;
         }
 
-        if (!WILDERNESS.equals(index)) {
-            IDirection direction = directionGuides.get(index);
-            symbol = direction.getSymbol();
+        if (!WILDERNESS.equals(directionIndex)) {
+            IDirection direction = directionGuides.get(directionIndex);
+            return direction.getSymbol();
         }
 
-        return symbol;
+        return WILDERNESS_SYMBOL;
     }
     
     @Override

@@ -15,30 +15,31 @@ import org.slf4j.LoggerFactory;
 import lifegamemap.output.Cartographer;
 import lifegamemap.road.Direction;
 import lifegamemap.road.IDirection;
-import lifegamemap.road.RoadMap;
-import lifegamemap.road.RoadMapCodec;
+import lifegamemap.road.MapWalker;
+import lifegamemap.road.MapWalkerCodec;
 
-public class MonopolyMapGenerator {
+public class LifeGameGenerator {
 
-    private static final Logger logger = LoggerFactory.getLogger(MonopolyMapGenerator.class);
+    private static final Logger logger = LoggerFactory.getLogger(LifeGameGenerator.class);
     
-    /**
-     * @param args
-     */
     /**
      * @param args
      * @throws IOException 
      */
     public static void main(String[] args) throws IOException {
 
-        List<IDirection> directions = Direction.DIRECTIONS_4;
+        // prepare possible directions
+        List<IDirection> directionGuides = Direction.DIRECTIONS_4;
         
+        // prepare genetic algorithm engine
         Engine<IntegerGene, Long> engine = Engine
-                .builder(RoadMap.FITNESS, new RoadMapCodec(directions, 5, 7))
+                .builder(MapWalker.FITNESS, new MapWalkerCodec(directionGuides, 5, 7))
                 .build();
 
+        // prepare genetic algorithm statistic
         EvolutionStatistics<Long, ?> statistics = EvolutionStatistics.ofNumber();
 
+        // start engine
         Phenotype<IntegerGene, Long> result = engine
                 .stream()
                 .limit(500)
@@ -48,8 +49,9 @@ public class MonopolyMapGenerator {
         logger.info("\n" + statistics.toString());
         logger.info("Best fitness: {}", result.getFitness());
         
+        // output result
         Cartographer cartographer = Cartographer.builder()
-                .directions(directions)
+                .directions(directionGuides)
                 .data(result)
                 .build();
         

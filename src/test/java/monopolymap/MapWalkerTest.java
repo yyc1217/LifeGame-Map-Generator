@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 import lifegamemap.road.Cursor;
 import lifegamemap.road.Direction;
 import lifegamemap.road.IDirection;
-import lifegamemap.road.Road;
-import lifegamemap.road.RoadMap;
+import lifegamemap.road.Map;
+import lifegamemap.road.MapWalker;
 
-public class RoadMapTest {
+public class MapWalkerTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(RoadMapTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(MapWalkerTest.class);
     
     private List<IDirection> testDirections = Direction.DIRECTIONS_4;
     
@@ -30,13 +30,13 @@ public class RoadMapTest {
         
         int[][] indexes = DirectionHelper.toDirectionIndex(directions, testDirections);
 
-        Road road = new Road(indexes);
+        Map map = new Map(indexes);
         Cursor cursor = new Cursor(0, 0);
         
-        RoadMap roadMap = new RoadMap(road, this.testDirections, 2, 2);
-        long depth = roadMap.findMaxDepth(cursor);
+        MapWalker mapWalker = new MapWalker(map, this.testDirections, 2, 2);
+        long depth = mapWalker.findMaxDepth(cursor);
         
-        logger.debug(road.toString());
+        logger.debug(map.toString());
         
         assertEquals(4, depth);
     }
@@ -51,13 +51,13 @@ public class RoadMapTest {
         
         int[][] indexes = DirectionHelper.toDirectionIndex(directions, testDirections);
 
-        Road road = new Road(indexes);
+        Map map = new Map(indexes);
         Cursor cursor = new Cursor(0, 0);
 
-        RoadMap roadMap = new RoadMap(road, testDirections, 2, 2);
-        long depth = roadMap.findMaxDepth(cursor);
+        MapWalker mapWalker = new MapWalker(map, testDirections, 2, 2);
+        long depth = mapWalker.findMaxDepth(cursor);
         
-        logger.debug(road.toString());
+        logger.debug(map.toString());
         
         assertEquals(2, depth);
     }

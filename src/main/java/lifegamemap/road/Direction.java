@@ -14,13 +14,20 @@ public class Direction implements IDirection {
     public static final Direction LEFT = new Direction(0, -1, '←');
     public static final Direction TOP_LEFT = new Direction(-1, -1, '↖');
     
+    /**
+     * {@link #TOP}, {@link #RIGHT}, {@link #BOTTOM}, {@link #LEFT}
+     */
     public static final List<IDirection> DIRECTIONS_4 = Arrays.asList(
             TOP,
             RIGHT,
             BOTTOM,
             LEFT
     );
-    
+
+    /**
+     * {@link #TOP}, {@link #TOP_RIGHT}, {@link #RIGHT}, {@link #BOTTOM_RIGHT},
+     * {@link #BOTTOM}, {@link #BOTTOM_LEFT}, {@link #LEFT}, {@link #TOP_LEFT}
+     */
     public static final List<IDirection> DIRECTIONS_8 = Arrays.asList(
             TOP,
             TOP_RIGHT,
@@ -36,6 +43,12 @@ public class Direction implements IDirection {
     private int columnOffset;
     private char symbol;
     
+    /**
+     * Create a direction.
+     * @param rowOffset offset of row index.
+     * @param columnOffset offset of column index.
+     * @param symbol Symbol which represents direction.
+     */
     public Direction(int rowOffset, int columnOffset, char symbol) {
         this.rowOffset = rowOffset;
         this.columnOffset = columnOffset;
