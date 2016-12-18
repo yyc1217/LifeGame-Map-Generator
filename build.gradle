@@ -10,6 +10,8 @@ tasks.withType(JavaCompile) {
 
 dependencies {
 
+	compile 'commons-io:commons-io:2.5'
+	
 	compile 'org.bitbucket.fwilhelm:org.jenetics:3.6.0'
     compile 'org.slf4j:slf4j-api:1.7.21'
 	compile 'org.slf4j:slf4j-log4j12:1.7.22'

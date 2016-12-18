@@ -2,6 +2,7 @@ package lifegamemap;
 
 import static org.jenetics.engine.EvolutionResult.toBestPhenotype;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.jenetics.IntegerGene;
@@ -26,8 +27,9 @@ public class MonopolyMapGenerator {
      */
     /**
      * @param args
+     * @throws IOException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         List<IDirection> directions = Direction.DIRECTIONS_4;
         

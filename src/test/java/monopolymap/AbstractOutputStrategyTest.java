@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThat;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,9 +26,14 @@ public class AbstractOutputStrategyTest {
     @Before
     public void init() {
         
-        strategy = new AbstractOutputStrategy() {
+        strategy = new AbstractOutputStrategy(System.out) {
             @Override
             public void output() {
+            }
+
+            @Override
+            protected InputStream inputStream() {
+                return null;
             }
         };
         

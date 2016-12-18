@@ -1,5 +1,6 @@
 package lifegamemap.output;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.jenetics.IntegerGene;
@@ -36,7 +37,7 @@ public class Cartographer {
         this.data = data;
     }
 
-    public void output() {
+    public void output() throws IOException {
         this.outputStrategy.setPhenotype(this.data)
                          .with(this.directionGuides)
                          .output();

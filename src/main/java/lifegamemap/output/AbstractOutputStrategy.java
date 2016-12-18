@@ -1,8 +1,14 @@
 package lifegamemap.output;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.apache.commons.io.IOUtils;
 import org.jenetics.IntegerGene;
 import org.jenetics.Phenotype;
 
@@ -16,8 +22,14 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
     public static final Integer WILDERNESS = -1;
     public static final Character WILDERNESS_SYMBOL = '*';
     
+    private OutputStream outputStream;
+    
     private Phenotype<IntegerGene, Long> phenotype;
-    protected List<IDirection> directionGuides;
+    private List<IDirection> directionGuides;
+    
+    public AbstractOutputStrategy(OutputStream target) {
+        this.outputStream = target;
+    }
 
     @Override
     public IOutputStrategy setPhenotype(Phenotype<IntegerGene, Long> phenotype) {
@@ -89,5 +101,22 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
         }
         
         return symbol;
+    }
+    
+    @Override
+    public void output() throws IOException {
+        IOUtils.copy(this.inputStream(), this.outputStream);
+    }
+    
+    protected InputStream inputStream() {
+        
+        List<List<Character>> symbols = this.toSymbols(this.getData(), this.getDirectionGuides());
+        String input = symbols.stream()
+                .map(List::toString)
+                .collect(Collectors.joining(",\n"));
+        
+        input = "[\n" + input + "\n]";
+        
+        return IOUtils.toInputStream(input, Charset.forName("UTF-8"));
     }
 }
