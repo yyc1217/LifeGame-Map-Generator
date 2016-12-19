@@ -12,6 +12,8 @@ import org.apache.commons.io.IOUtils;
 import org.jenetics.IntegerGene;
 import org.jenetics.Phenotype;
 
+import com.google.gson.Gson;
+
 import lifegamemap.road.Cursor;
 import lifegamemap.road.IDirection;
 import lifegamemap.road.Map;
@@ -23,6 +25,8 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
     public static final Character WILDERNESS_SYMBOL = '*';
     public static final Integer DESTINATION = -2;
     public static final Character DESTINATION_SYMBOL = 'E';
+    
+    private static final Gson GSON = new Gson();
     
     private OutputStream outputStream;
     
@@ -127,13 +131,9 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
     }
     
     protected InputStream inputStream() {
-        
+
         List<List<Character>> symbols = this.toSymbols(this.getData(), this.getDirectionGuides());
-        String input = symbols.stream()
-                .map(List::toString)
-                .collect(Collectors.joining(",\n"));
-        
-        input = "[\n" + input + "\n]";
+        String input = symbols.stream().map(GSON::toJson).collect(Collectors.joining(",\n", "[", "]"));
         
         return IOUtils.toInputStream(input, Charset.forName("UTF-8"));
     }

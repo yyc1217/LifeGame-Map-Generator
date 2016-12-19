@@ -3,7 +3,7 @@
 
 
 ### Output Example
-**25** steps, start at **(0, 0)**, **E** represents destination.
+**25** steps, start at **(0, 0)**, end at **E**.
 ```
 [
 [↓, →, →, ↓, E, ←, *],
