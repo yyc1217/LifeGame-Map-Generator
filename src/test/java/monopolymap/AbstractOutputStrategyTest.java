@@ -5,8 +5,6 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThat;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -72,20 +70,12 @@ public class AbstractOutputStrategyTest {
             { AbstractOutputStrategy.WILDERNESS, AbstractOutputStrategy.DESTINATION }
         };
         
-        List<List<Character>> expectedSymbols = new ArrayList<List<Character>>(2);
-        List<Character> row1 = Arrays.asList(
-                testDirections.get(data[0][0]).getSymbol(), 
-                testDirections.get(data[0][1]).getSymbol()
-        );
-        expectedSymbols.add(row1);
+        Character[][] expectedSymbols = new Character[][] {
+            { testDirections.get(data[0][0]).getSymbol(), testDirections.get(data[0][1]).getSymbol() },
+            { AbstractOutputStrategy.WILDERNESS_SYMBOL, AbstractOutputStrategy.DESTINATION_SYMBOL }
+        };
         
-        List<Character> row2 = Arrays.asList(
-                AbstractOutputStrategy.WILDERNESS_SYMBOL,
-                AbstractOutputStrategy.DESTINATION_SYMBOL
-        );
-        expectedSymbols.add(row2);
-        
-        List<List<Character>> actualSymbols = strategy.toSymbols(data, testDirections);
+        Character[][] actualSymbols = strategy.toSymbols(data, testDirections);
         
         assertThat(actualSymbols, is(expectedSymbols));
     }

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,20 +91,21 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
      * Convert {@code directionIndexes} to symbols based on {@code directionGuides}
      * @param directionIndexes
      * @param directionGuides
-     * @return List<List<Character>>
+     * @return Character[][]
      */
-    public List<List<Character>> toSymbols(int[][] directionIndexes, List<IDirection> directionGuides) {
+    public Character[][] toSymbols(int[][] directionIndexes, List<IDirection> directionGuides) {
         
-        List<List<Character>> symbols = new ArrayList<List<Character>>(directionIndexes.length);
+        Character[][] symbols = new Character[directionIndexes.length][];
         
         for (int row = 0; row < directionIndexes.length; row++) {
             
-            symbols.add(new ArrayList<Character>(directionIndexes[row].length));
+            symbols[row] = new Character[directionIndexes[row].length];
             
             for (int column = 0; column < directionIndexes[row].length; column++) {
                 
-                int index = directionIndexes[row][column];
-                symbols.get(row).add(toSymbol(index));
+                int directionIndex = directionIndexes[row][column];
+                Character symbol = toSymbol(directionIndex);
+                symbols[row][column] = symbol;
             }
         }
         
@@ -112,7 +113,6 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
     }
     
     protected Character toSymbol(int directionIndex) {
-        
         if (DESTINATION.equals(directionIndex)) {
             return DESTINATION_SYMBOL;
         }
@@ -132,8 +132,8 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
     
     protected InputStream inputStream() {
 
-        List<List<Character>> symbols = this.toSymbols(this.getData(), this.getDirectionGuides());
-        String input = symbols.stream().map(GSON::toJson).collect(Collectors.joining(",\n", "[", "]"));
+        Character[][] symbols = this.toSymbols(this.getData(), this.getDirectionGuides());
+        String input = Arrays.stream(symbols).map(GSON::toJson).collect(Collectors.joining(",\n", "[", "]"));
         
         return IOUtils.toInputStream(input, Charset.forName("UTF-8"));
     }
