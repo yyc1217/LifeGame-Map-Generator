@@ -40,6 +40,7 @@
         // output result
         Cartographer cartographer = Cartographer.builder()
                 .directions(directionGuides)
+                .format(OutputFormat.HUMAN_READABLE)
                 .data(result)
                 .build();
         

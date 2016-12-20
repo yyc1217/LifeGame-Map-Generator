@@ -18,8 +18,23 @@ public class OutputFormatTest {
         
         Character[][] symbols = { {'→'}, {'*'} };
         
-        String expectedOutput = "[[{\"row\":0,\"column\":0,\"symbol\":\"→\"}],[{\"row\":1,\"column\":0,\"symbol\":\"*\"}]]";
+        String expectedOutput = "[[{row:0,column:0,symbol:→}],[{row:1,column:0,symbol:*}]]";
         String actualOutput = IOUtils.toString(format.inputStream(symbols), Charset.forName("UTF-8"));
+        actualOutput = actualOutput.replaceAll("[\\s\"]", "");
+        
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
+    public void testHumanReadable() throws IOException {
+        OutputFormat format = OutputFormat.HUMAN_READABLE;
+
+        Character[][] symbols = { { '→', '←' }, { '*', 'E' } };
+
+        String expectedOutput = "[[→,←],[*,E]]";
+
+        String actualOutput = IOUtils.toString(format.inputStream(symbols), Charset.forName("UTF-8"));
+        actualOutput = actualOutput.replaceAll("\\s", "");
         
         assertEquals(expectedOutput, actualOutput);
     }

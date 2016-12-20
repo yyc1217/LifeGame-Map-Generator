@@ -2,20 +2,32 @@ package lifegamemap.output;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
 
+/**
+ * Decide output format.
+ * @author Yeh-Yung
+ *
+ */
 public abstract class OutputFormat {
     
     private static final Gson GSON = new Gson();
     
+    public abstract InputStream inputStream(Character[][] symbols);
+    
+    /**
+     * <code>[[{"row":0,"column":0,"symbol":"↓"},{"row":0...</code>
+     */
     public static final OutputFormat JSON_LIST = new OutputFormat() {
 
         @Override
-        public
-        InputStream inputStream(Character[][] symbols) {
+        public InputStream inputStream(Character[][] symbols) {
             
             Symbol[][] output = new Symbol[symbols.length][];
             
@@ -30,8 +42,23 @@ public abstract class OutputFormat {
             
             return IOUtils.toInputStream(GSON.toJson(output), Charset.forName("UTF-8"));
         }
-       
     };
 
-    public abstract InputStream inputStream(Character[][] symbols);
+    /**
+     * <code>[
+              [↓, →, →, ↓, E, ←, *],
+       </code>
+     */
+    public static final OutputFormat HUMAN_READABLE = new OutputFormat() {
+
+        @Override
+        public InputStream inputStream(Character[][] symbols) {
+            
+            String input = Stream.of(symbols)
+                    .map(Arrays::toString)
+                    .collect(Collectors.joining(",\n", "[\n", "\n]"));
+            
+            return IOUtils.toInputStream(input, Charset.forName("UTF-8"));
+        }
+    };
 }

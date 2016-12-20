@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import lifegamemap.output.Cartographer;
+import lifegamemap.output.OutputFormat;
 import lifegamemap.road.Direction;
 import lifegamemap.road.IDirection;
 import lifegamemap.road.MapWalker;
@@ -53,6 +54,7 @@ public class LifeGameGenerator {
         Cartographer cartographer = Cartographer.builder()
                 .directions(directionGuides)
                 .data(result)
+                .format(OutputFormat.HUMAN_READABLE)
                 .build();
         
         cartographer.output();
