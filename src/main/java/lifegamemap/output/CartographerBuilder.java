@@ -13,6 +13,7 @@ public class CartographerBuilder {
     private Cartographer cartographer;
     
     private List<IDirection> directions = Direction.DIRECTIONS_4;
+    private OutputFormat outputFormat = OutputFormat.JSON_LIST;
     private IOutputStrategy outputStrategy = new ConsoleOutputStrategy();
     private Phenotype<IntegerGene, Long> result;
     
@@ -31,8 +32,13 @@ public class CartographerBuilder {
         return this;
     }
     
+    public CartographerBuilder format(OutputFormat outputFormat) {
+        this.outputFormat = outputFormat;
+        return this;
+    }
+    
     public Cartographer build() {
-        this.cartographer = new Cartographer(this.directions, this.result, this.outputStrategy);
+        this.cartographer = new Cartographer(this.directions, this.result, this.outputStrategy, this.outputFormat);
         return this.cartographer;
     }
 }

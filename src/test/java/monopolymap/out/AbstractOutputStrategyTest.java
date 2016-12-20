@@ -1,10 +1,9 @@
-package monopolymap;
+package monopolymap.out;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThat;
 
-import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Before;
@@ -27,11 +26,6 @@ public class AbstractOutputStrategyTest {
         strategy = new AbstractOutputStrategy(System.out) {
             @Override
             public void output() {
-            }
-
-            @Override
-            protected InputStream inputStream() {
-                return null;
             }
         };
         

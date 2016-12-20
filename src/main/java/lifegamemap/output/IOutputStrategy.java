@@ -11,5 +11,6 @@ import lifegamemap.road.IDirection;
 public interface IOutputStrategy {
     IOutputStrategy with(List<IDirection> directionGuides);
     IOutputStrategy setPhenotype(Phenotype<IntegerGene, Long> data);
+    IOutputStrategy format(OutputFormat outputFormat);
     void output() throws IOException;
 }

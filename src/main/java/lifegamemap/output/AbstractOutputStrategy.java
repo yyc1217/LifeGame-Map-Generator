@@ -3,16 +3,10 @@ package lifegamemap.output;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.apache.commons.io.IOUtils;
 import org.jenetics.IntegerGene;
 import org.jenetics.Phenotype;
-
-import com.google.gson.Gson;
 
 import lifegamemap.road.Cursor;
 import lifegamemap.road.IDirection;
@@ -26,12 +20,13 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
     public static final Integer DESTINATION = -2;
     public static final Character DESTINATION_SYMBOL = 'E';
     
-    private static final Gson GSON = new Gson();
+
     
     private OutputStream outputStream;
     
     private Phenotype<IntegerGene, Long> phenotype;
     private List<IDirection> directionGuides;
+    private OutputFormat outputFormat;
     
     public AbstractOutputStrategy(OutputStream target) {
         this.outputStream = target;
@@ -46,6 +41,12 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
     @Override
     public IOutputStrategy with(List<IDirection> directionGuides) {
         this.directionGuides = directionGuides;
+        return this;
+    }
+
+    @Override
+    public IOutputStrategy format(OutputFormat outputFormat) {
+        this.outputFormat = outputFormat;
         return this;
     }
 
@@ -127,14 +128,8 @@ public abstract class AbstractOutputStrategy implements IOutputStrategy {
     
     @Override
     public void output() throws IOException {
-        IOUtils.copy(this.inputStream(), this.outputStream);
-    }
-    
-    protected InputStream inputStream() {
-
         Character[][] symbols = this.toSymbols(this.getData(), this.getDirectionGuides());
-        String input = Arrays.stream(symbols).map(GSON::toJson).collect(Collectors.joining(",\n", "[", "]"));
-        
-        return IOUtils.toInputStream(input, Charset.forName("UTF-8"));
+        InputStream inputStream = this.outputFormat.inputStream(symbols);
+        IOUtils.copy(inputStream, this.outputStream);
     }
-}
+    }

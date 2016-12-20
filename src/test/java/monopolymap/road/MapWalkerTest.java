@@ -1,4 +1,4 @@
-package monopolymap;
+package monopolymap.road;
 
 import static org.junit.Assert.*;
 
